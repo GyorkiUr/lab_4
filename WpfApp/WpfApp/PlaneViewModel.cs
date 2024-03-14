@@ -10,6 +10,7 @@ namespace WpfApp
 {
     internal class PlaneViewModel : ObservableObject
     {
+
 		private string name;
 
 		public string Name
@@ -57,7 +58,20 @@ namespace WpfApp
 
 		private SolidColorBrush conditionColor;
 
-		public SolidColorBrush ConditionColor
+        public PlaneViewModel(string name, string failure, double repairCost, int condition)
+        {
+            Name = name;
+            Failure = failure;
+            RepairCost = repairCost;
+            Condition = condition;
+        }
+
+        public PlaneViewModel()
+        {
+            
+        }
+
+        public SolidColorBrush ConditionColor
 		{
 			get { 
 				switch (condition)
