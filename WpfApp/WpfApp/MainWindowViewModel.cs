@@ -17,9 +17,30 @@ namespace WpfApp
 		private ObservableCollection<PlaneViewModel> toBeRepaired;
 		private ObservableCollection<PlaneViewModel> repairing;
 
+        private ObservableObject toBeRepairedSelected;
+
+        public ObservableObject ToBeReapiredSelected
+        {
+            get { return toBeRepairedSelected; }
+            set { toBeRepairedSelected = value; }
+        }
+
+        private ObservableObject repairingSelected;
+
+        public ObservableObject RepairingSelected
+        {
+            get { return repairingSelected; }
+            set { repairingSelected = value; }
+        }
+
+
+        public RelayCommand Add { get; set; }
+        public RelayCommand SendToRepair { get; set; }
+        public RelayCommand CallBackFromRepair { get; set; }
+
         public MainWindowViewModel()
         {
-            Rent = new RelayCommand(AddCar, CanAddCar);
+            Add = new RelayCommand(AddCar, CanAddCar);
             Edit = new RelayCommand(EditCar, CanEditCar);
             Return = new RelayCommand(RemoveCar, CanRemoveCar);
             SaveClose = new RelayCommand(SaveCar);
@@ -38,11 +59,10 @@ namespace WpfApp
             {
                 ToBeRepaired.Add(new PlaneViewModel()
                 {
-                    basePrice = rnd.Next(1000),
-                    colorCode = rnd.Next(7),
-                    plateNumber = "ABC" + rnd.Next(9).ToString() + rnd.Next(9).ToString() + rnd.Next(9).ToString(),
-                    speed = rnd.Next(240),
-                    degradationFactor = rnd.NextDouble(),
+                    Name = "Apache" + rnd.Next(1000).ToString(),
+                    Failure =  "Error"+ rnd.Next(7),
+                    RepairCost = rnd.Next(100)*rnd.NextDouble(),
+                    Condition = rnd.Next(3),
                 });
             }
         }
