@@ -16,23 +16,34 @@ namespace WpfApp
     {
 		private ObservableCollection<PlaneViewModel> toBeRepaired;
 		private ObservableCollection<PlaneViewModel> repairing;
-
         private ObservableObject toBeRepairedSelected;
-
+        private ObservableObject repairingSelected;
         public ObservableObject ToBeReapiredSelected
         {
-            get { return toBeRepairedSelected; }
-            set { toBeRepairedSelected = value; }
+            get => toBeRepairedSelected;
+            set
+            {
+                if (Equals(value, toBeRepairedSelected)) return;
+                toBeRepairedSelected = value;
+                OnPropertyChanged();
+                SendToRepair.NotifyCanExecuteChanged();               
+            }
         }
-
-        private ObservableObject repairingSelected;
 
         public ObservableObject RepairingSelected
         {
-            get { return repairingSelected; }
-            set { repairingSelected = value; }
+            get => repairingSelected;
+            set
+            {
+                if (Equals(value, repairingSelected)) return;
+                repairingSelected = value;
+                OnPropertyChanged();
+                CallBackFromRepair.NotifyCanExecuteChanged();
+            }
         }
 
+        public ObservableCollection<PlaneViewModel> ToBeRepaired { get; set; } = new ObservableCollection<PlaneViewModel>();
+        public ObservableCollection<PlaneViewModel> Repairing { get; set; } = new ObservableCollection<PlaneViewModel>();
 
         public RelayCommand Add { get; set; }
         public RelayCommand SendToRepair { get; set; }
@@ -40,15 +51,10 @@ namespace WpfApp
 
         public MainWindowViewModel()
         {
-            Add = new RelayCommand(AddCar, CanAddCar);
-            Edit = new RelayCommand(EditCar, CanEditCar);
-            Return = new RelayCommand(RemoveCar, CanRemoveCar);
-            SaveClose = new RelayCommand(SaveCar);
+            Add = new RelayCommand(AddPlane, CanAddPlane);
+            SendToRepair = new RelayCommand(RepairPlane, CanRepairPlane);
+            CallBackFromRepair = new RelayCommand(RemovePlane, CanRemovePlane);           
 
-            ToBeRepaired.CollectionChanged += (sender, args) =>
-            {
-                OnPropertyChanged(nameof(AvgOfList));
-            };
             Repairing.CollectionChanged += (sender, args) =>
             {
                 OnPropertyChanged(nameof(SumOfList));
@@ -67,10 +73,67 @@ namespace WpfApp
             }
         }
 
-        public ObservableCollection<PlaneViewModel> ToBeRepaired { get; set; } = new ObservableCollection<PlaneViewModel>();
-	
-		public ObservableCollection<PlaneViewModel> Repairing { get; set; } = new ObservableCollection<PlaneViewModel>();
+      
 
+        public void AddPlane()
+        {
+            throw new NotImplementedException();
+        }
+        public bool CanAddPlane()
+        {
+            throw new NotImplementedException();
+        }
+        public void RepairPlane()
+        {
+            if (!CanRepairPlane())
+            {
+                return;
+            }
+
+            var planeToMove = ToBeReapiredSelected;
+
+            if (planeToMove == null)
+            {
+                return;
+            }
+
+            ToBeRepaired.Remove((PlaneViewModel)planeToMove);
+            Repairing.Add((PlaneViewModel)planeToMove);
+        }
+        public bool CanRepairPlane()
+        {
+            return ToBeReapiredSelected != null;
+        }
+        public void RemovePlane()
+        {
+            if (!CanRemovePlane())
+            {
+                return;
+            }
+
+            var planeToMove = RepairingSelected;
+
+            if (planeToMove == null)
+            {
+                return;
+            }
+            Repairing.Remove((PlaneViewModel)planeToMove);
+            ToBeRepaired.Add((PlaneViewModel)planeToMove);
+        }
+        public bool CanRemovePlane()
+        {
+            return RepairingSelected != null;
+        }
+       
+        public double SumOfList
+        {
+            get
+            {
+                return Repairing.Sum(_ => _.RepairCost);
+            }
+        }
+
+        
 
 
     }

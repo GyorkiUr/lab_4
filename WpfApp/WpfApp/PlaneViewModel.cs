@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace WpfApp
 {
-    internal class PlaneViewModel : ObservableObject
+    public class PlaneViewModel : ObservableObject
     {
 
 		private string name;
