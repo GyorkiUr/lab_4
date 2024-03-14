@@ -80,7 +80,7 @@ namespace WpfApp
 
         public override string ToString()
         {
-            return 
+			return "";
         }
 
 
