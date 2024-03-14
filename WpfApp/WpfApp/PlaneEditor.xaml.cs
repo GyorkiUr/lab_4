@@ -23,5 +23,10 @@ namespace WpfApp
         {
             InitializeComponent();
         }
+
+        internal void Setup(MainWindowViewModel vm)
+        {
+            this.DataContext = vm;
+        }
     }
 }

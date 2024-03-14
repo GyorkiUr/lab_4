@@ -15,7 +15,7 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding ToBeRepaired }" SelectedItem="{Binding ToBeReapiredSelected}">
+        <ListBox Grid.Column="0" ItemsSource="{Binding ToBeRepaired }" SelectedItem="{Binding ToBeReapiredSelected}" HorizontalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="{Binding ConditionColor}">

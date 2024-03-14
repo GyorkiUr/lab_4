@@ -18,7 +18,7 @@ namespace WpfApp
 			get { return name; }
 			set {
 				SetProperty(ref name, value);
-				OnPropertyChanged();
+				
 				}
 		}
 
@@ -29,7 +29,7 @@ namespace WpfApp
 			get { return failure; }
 			set {
                 SetProperty(ref failure, value);
-                OnPropertyChanged();
+                
             }
 		}
 
@@ -40,7 +40,7 @@ namespace WpfApp
 			get { return repairCost; }
 			set {
                 SetProperty(ref repairCost, value);
-                OnPropertyChanged();
+                
             }
 		}
 
