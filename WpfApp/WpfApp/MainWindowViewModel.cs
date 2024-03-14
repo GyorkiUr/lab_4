@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using System.ComponentModel;
 
 namespace WpfApp
 {
@@ -18,6 +20,20 @@ namespace WpfApp
 		private ObservableCollection<PlaneViewModel> repairing;
         private ObservableObject toBeRepairedSelected;
         private ObservableObject repairingSelected;
+        private IPlaneService service;
+
+        private PlaneViewModel newPlane;
+
+        public PlaneViewModel NewPlane
+        {
+            get { return newPlane; }
+            set {
+                if (Equals(value, newPlane)) return;
+                newPlane = value;
+                OnPropertyChanged();               
+            }
+        }
+
         public ObservableObject ToBeReapiredSelected
         {
             get => toBeRepairedSelected;
@@ -45,12 +61,34 @@ namespace WpfApp
         public ObservableCollection<PlaneViewModel> ToBeRepaired { get; set; } = new ObservableCollection<PlaneViewModel>();
         public ObservableCollection<PlaneViewModel> Repairing { get; set; } = new ObservableCollection<PlaneViewModel>();
 
+        
+
         public RelayCommand Add { get; set; }
         public RelayCommand SendToRepair { get; set; }
         public RelayCommand CallBackFromRepair { get; set; }
 
-        public MainWindowViewModel()
+
+
+        public static bool IsInDesignMode
         {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
+            }
+        }
+
+
+        public MainWindowViewModel()
+            : this(IsInDesignMode ? null : Ioc.Default.GetService<IPlaneService>())
+        {
+
+        }
+
+
+        public MainWindowViewModel(IPlaneService service)
+        {
+            this.service = service;
             Add = new RelayCommand(AddPlane, CanAddPlane);
             SendToRepair = new RelayCommand(RepairPlane, CanRepairPlane);
             CallBackFromRepair = new RelayCommand(RemovePlane, CanRemovePlane);           
@@ -77,11 +115,13 @@ namespace WpfApp
 
         public void AddPlane()
         {
-            throw new NotImplementedException();
+            NewPlane = new PlaneViewModel();
+            ToBeRepaired.Add(NewPlane);
+            service.Add(this);
         }
         public bool CanAddPlane()
         {
-            throw new NotImplementedException();
+            return true;
         }
         public void RepairPlane()
         {

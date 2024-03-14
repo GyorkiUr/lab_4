@@ -6,9 +6,7 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Title="PlaneEditor" Height="450" Width="800">
-    <Window.DataContext>
-        <local:EditPlaneViewModel/>
-    </Window.DataContext>
+    
     <Grid DataContext="{Binding NewPlane}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -19,19 +17,17 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Label Content="Name" Foreground="AliceBlue" Grid.Row="0"/>
-        <Label Content="{Binding Name}" Grid.Row="1"/>
-        
-        <Label Content="Failure" Foreground="AliceBlue" Grid.Row="2"/>
-        <Label Content="{Binding Failure}" Grid.Row="3"/>
-        <Label Content="Repair Cost" Foreground="AliceBlue" Grid.Row="4"/>
-        <Label Content="{Binding RepairCost}" Grid.Row="5"/>
-        
-        <Label Content="Condition" Foreground="AliceBlue" Grid.Row="6"/>
-        <Label Content="{Binding Condition}" Grid.Row="7"/>
-
-        <Button Command="{Binding SaveCloseCommand}" Grid.Row="8"/>
+        <Label Content="Name"  Grid.Row="0"/>
+        <TextBox Text="{Binding Name}" Grid.Row="1"/>
+        <Label Content="Failure" Grid.Row="2"/>
+        <TextBox Text="{Binding Failure}" Grid.Row="3"/>
+        <Label Content="Repair Cost" Grid.Row="4"/>
+        <TextBox Text="{Binding RepairCost}" Grid.Row="5"/>
+        <Label Content="Condition" Grid.Row="6"/>
+        <TextBox Text="{Binding Condition}" Grid.Row="7"/>
+        <Button Content="Save" Command="{Binding SaveCloseCommand}" Grid.Row="8"/>
 
     </Grid>
 </Window>

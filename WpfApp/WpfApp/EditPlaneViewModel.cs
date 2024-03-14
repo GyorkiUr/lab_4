@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,13 @@ namespace WpfApp
 {
     public class EditPlaneViewModel : ObservableRecipient
     {
-		private PlaneViewModel newPlane;
+        public RelayCommand close { get; set; }
 
-		public PlaneViewModel NewPlane
-		{
-			get { return newPlane; }
-			set { SetProperty(ref newPlane, value);
-				OnPropertyChanged();
-			}
-		}
 
-        public EditPlaneViewModel(PlaneViewModel newPlane)
-        {
-            NewPlane = newPlane;
-        }
 
         public EditPlaneViewModel()
         {
+
         }
     }
 }
