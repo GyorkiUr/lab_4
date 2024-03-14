@@ -7,61 +7,46 @@
         mc:Ignorable="d"
         Title="PlaneEditor" Height="450" Width="800">
     <Window.DataContext>
-        <vms:MainWindowViewModel/>
+        <local:MainWindowViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <helpers:NumberToColorConverter x:Key="colorconvert"/>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Barrack}" SelectedItem="{Binding SelectedFromBarracks}" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Column="0" ItemsSource="{Binding ToBeRepaired }" SelectedItem="{Binding ToBeReapiredSelected}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Label Content="{Binding Type}" FontSize="14" FontWeight="Bold"/>
-                            <Label Content="{Binding Power}"  ContentStringFormat="Power: {0}" Grid.Row="1"/>
-                            <Label Content="{Binding Speed}"  ContentStringFormat="Speed: {0}" Grid.Row="1" Grid.Column="1"/>
-                            <ProgressBar Maximum="10" Margin="10" Value="{Binding Power}" Foreground="{Binding Power, Converter={StaticResource colorconvert}}" Grid.Row="2" Height="10"/>
-                            <ProgressBar Maximum="10" Margin="10" Value="{Binding Speed}" Foreground="{Binding Speed, Converter={StaticResource colorconvert}}" Grid.Row="2" Height="10" Grid.Column="2"/>
-                        </Grid>
-                    </Border>
+                    <Grid Background="{Binding ConditionColor}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Name}" Grid.Row="0" Grid.Column="1"/>
+                        <Label Content="{Binding Failure}" Grid.Row="1" Grid.Column="1"/>
+                        <Label Content="{Binding RepairCost}" Grid.Row="2" Grid.Column="1"/>
+                        <Label Content="Name: " Grid.Row="0" Grid.Column="0"/>
+                        <Label Content="Failure: : " Grid.Row="1" Grid.Column="0"/>
+                        <Label Content="Repair Cost: " Grid.Row="2" Grid.Column="0"/>
+                    </Grid>
+                           
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
-            <Label HorizontalContentAlignment="Center" FontSize="14" Content="{Binding AllCost}" ContentStringFormat="Cost: {0}$" />
-            <Button Content="Add To Army" Command="{Binding AddToArmyCommand}" Margin="10" Padding="10" />
-            <Button Content="Remove From Army" Command="{Binding RemoveFromArmyCommand}" Margin="10" Padding="10" />
-            <Button Content="Edit Trooper" Command="{Binding EditTrooperCommand}" Margin="10" Padding="10" />
-            <Label HorizontalContentAlignment="Center" FontSize="14" Content="{Binding AVGPower}" ContentStringFormat="Power: {0}" />
-            <ProgressBar Height="20" Maximum="10" Value="{Binding AVGPower, Mode=OneWay}" Foreground="{Binding AVGPower, Converter={StaticResource colorconvert}}" Margin="10" />
-            <Label HorizontalContentAlignment="Center" FontSize="14" Content="{Binding AVGSpeed}" ContentStringFormat="Speed: {0}" />
-            <ProgressBar Height="20" Maximum="10" Value="{Binding AVGSpeed, Mode=OneWay}" Foreground="{Binding AVGSpeed, Converter={StaticResource colorconvert}} " Margin="10" />
+            <Label HorizontalContentAlignment="Center" FontSize="14" Content="{Binding SumOfList}" ContentStringFormat="Cost: {0}$" />
+            <Button Content="Add new" Command="{Binding Add}" Margin="10" Padding="10" />
+            <Button Content="Repair" Command="{Binding SendToRepair}" Margin="10" Padding="10" />
+            <Button Content="Return" Command="{Binding CallBackFromRepair}" Margin="10" Padding="10" />
         </StackPanel>
-        <ListBox Grid.Column="2" ItemsSource="{Binding Army}" SelectedItem="{Binding SelectedFromArmy}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Type}" />
-                        <Label Content="{Binding Power}" ContentStringFormat="[{0}]"/>
-                        <Label Content="{Binding Speed}" ContentStringFormat="[{0}]"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListBox Grid.Column="2" ItemsSource="{Binding Repairing}" SelectedItem="{Binding RepairingSelected}"/>
+
+
     </Grid>
 </Window>
