@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="PlaneEditor" Height="450" Width="800">
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <local:EditPlaneViewModel/>
     </Window.DataContext>
-    <Grid DataContext="{Binding ToBeReapiredSelected}">
+    <Grid DataContext="{Binding NewPlane}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
